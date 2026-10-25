@@ -1,0 +1,43 @@
+{
+  "template_id": "steven-opl-standard",
+  "template_version": "1.0.0",
+  "supported_schema": "1.0",
+  "template_sha256": "dda0b14405e1a5802211773b99974ffadee65f47465220094e79c60a6bd19aef",
+  "source_template_name": "模板一点课空.docx",
+  "source_template_sha256": "b8f79d9dc731f694f98a239e017599cbbfc2911067ada21bab8c4be38f8fa729",
+  "text_slots": {
+    "title": {"source": "content.title.value", "marker": "{{title}}", "required": true},
+    "group": {"source": "metadata.group.value", "marker": "{{group}}", "required": true},
+    "procedure": {"source": "metadata.procedure.value", "marker": "{{procedure}}", "required": true},
+    "number": {"source": "metadata.number.value", "marker": "{{number}}", "required": false},
+    "creation_date": {"source": "metadata.creation_date.value", "marker": "{{creation_date}}", "required": true},
+    "lesson_type_display": {"source": "metadata.lesson_type_display.value", "marker": "{{lesson_type_display}}", "required": true},
+    "director": {"source": "metadata.director.value", "bookmark": "field_director", "required": false},
+    "team_leader": {"source": "metadata.team_leader.value", "bookmark": "field_team_leader", "required": false},
+    "made_by": {"source": "metadata.made_by.value", "bookmark": "field_made_by", "required": true},
+    "lesson_row_1": {"source": "layout_rows.0.text.value", "marker": "{{lesson_row_1}}", "required": false},
+    "lesson_row_2": {"source": "layout_rows.1.text.value", "marker": "{{lesson_row_2}}", "required": false},
+    "lesson_row_3": {"source": "layout_rows.2.text.value", "marker": "{{lesson_row_3}}", "required": false},
+    "lesson_row_4": {"source": "layout_rows.3.text.value", "marker": "{{lesson_row_4}}", "required": false},
+    "lesson_row_5": {"source": "layout_rows.4.text.value", "marker": "{{lesson_row_5}}", "required": false},
+    "lesson_row_6": {"source": "layout_rows.5.text.value", "marker": "{{lesson_row_6}}", "required": false}
+  },
+  "image_slots": {
+    "image_1": {"source": "layout_rows.0.image_id", "bookmark": "img_slot_1", "required": false, "max_width_cm": 8.0, "side": "left"},
+    "image_2": {"source": "layout_rows.1.image_id", "bookmark": "img_slot_2", "required": false, "max_width_cm": 8.0, "side": "right"},
+    "image_3": {"source": "layout_rows.2.image_id", "bookmark": "img_slot_3", "required": false, "max_width_cm": 8.0, "side": "left"},
+    "image_4": {"source": "layout_rows.3.image_id", "bookmark": "img_slot_4", "required": false, "max_width_cm": 8.0, "side": "right"},
+    "image_5": {"source": "layout_rows.4.image_id", "bookmark": "img_slot_5", "required": false, "max_width_cm": 8.0, "side": "left"},
+    "image_6": {"source": "layout_rows.5.image_id", "bookmark": "img_slot_6", "required": false, "max_width_cm": 8.0, "side": "right"}
+  },
+  "forbidden_markers": ["{{", "}}"],
+  "layout_invariants": [
+    "A4 portrait with original margins",
+    "two top-level tables: 6x7 main and 4x15 training",
+    "one nested 6x2 lesson table inside main row 6",
+    "image sides alternate left/right for rows 1-6",
+    "all lesson rows use cantSplit and 5.8 cm height",
+    "source images keep original display orientation and are not cropped"
+  ],
+  "visual_check_required": false
+}
