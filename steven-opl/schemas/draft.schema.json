@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "draft.schema.json",
+  "title": "Steven OPL content draft 1.1",
+  "$defs": {
+    "fact": {
+      "type": "object", "required": ["value", "status", "source_refs"],
+      "properties": {
+        "value": {},
+        "status": {"enum": ["user_confirmed", "user_stated", "assistant_suggested", "derived", "unknown", "conflict"]},
+        "source_refs": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["schema_version", "task_id", "draft_id", "lesson_type", "source_index", "scope", "metadata", "content", "steps", "images", "open_items"],
+  "properties": {
+    "schema_version": {"const": "1.1"},
+    "task_id": {"type": "string", "minLength": 1},
+    "draft_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string"},
+    "lesson_type": {"enum": ["fault_judgement", "error_prevention", "repair_tip", "assembly_note", "improvement_case"]},
+    "source_index": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["source_id", "type"],
+        "properties": {
+          "source_id": {"type": "string"}, "type": {"enum": ["message", "file", "image", "rule"]},
+          "path": {"type": ["string", "null"]}, "sha256": {"type": ["string", "null"]}
+        }, "additionalProperties": true
+      }
+    },
+    "scope": {
+      "type": "object", "required": ["single_point", "topic", "split_required"],
+      "properties": {
+        "single_point": {"type": "boolean"}, "topic": {"$ref": "#/$defs/fact"},
+        "split_required": {"type": "boolean"}, "excluded_topics": {"type": "array", "items": {"type": "string"}}
+      }, "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["group", "procedure", "number", "creation_date", "template_category", "director", "team_leader", "made_by"],
+      "properties": {
+        "group": {"$ref": "#/$defs/fact"}, "procedure": {"$ref": "#/$defs/fact"},
+        "number": {"$ref": "#/$defs/fact"}, "creation_date": {"$ref": "#/$defs/fact"},
+        "template_category": {"$ref": "#/$defs/fact"}, "director": {"$ref": "#/$defs/fact"},
+        "team_leader": {"$ref": "#/$defs/fact"}, "made_by": {"$ref": "#/$defs/fact"}
+      }, "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "required": ["title", "applicable_to", "prerequisites", "problem_or_goal", "key_point", "mistakes", "safety", "acceptance", "limitations"],
+      "properties": {
+        "title": {"$ref": "#/$defs/fact"}, "applicable_to": {"$ref": "#/$defs/fact"},
+        "prerequisites": {"$ref": "#/$defs/fact"}, "problem_or_goal": {"$ref": "#/$defs/fact"},
+        "key_point": {"$ref": "#/$defs/fact"}, "mistakes": {"$ref": "#/$defs/fact"},
+        "safety": {"$ref": "#/$defs/fact"}, "acceptance": {"$ref": "#/$defs/fact"},
+        "limitations": {"$ref": "#/$defs/fact"}
+      }, "additionalProperties": true
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["step_id", "order", "instruction", "check", "source_refs"],
+        "properties": {
+          "step_id": {"type": "string"}, "order": {"type": "integer", "minimum": 1},
+          "instruction": {"$ref": "#/$defs/fact"}, "check": {"$ref": "#/$defs/fact"},
+          "source_refs": {"type": "array", "items": {"type": "string"}}
+        }, "additionalProperties": true
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["image_id", "asset_id", "path", "source_sha256", "display_width_px", "display_height_px", "original_format", "send_order", "work_order", "insert_order", "user_description", "usage", "step_id", "caption", "included", "confirmed", "source_refs", "transform_authorization"],
+        "properties": {
+          "image_id": {"type": "string"}, "asset_id": {"type": "string"}, "path": {"type": "string"},
+          "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "display_width_px": {"type": ["integer", "null"], "minimum": 1},
+          "display_height_px": {"type": ["integer", "null"], "minimum": 1},
+          "original_format": {"type": ["string", "null"]},
+          "send_order": {"type": "integer", "minimum": 1}, "work_order": {"type": ["integer", "null"]},
+          "insert_order": {"type": ["integer", "null"]}, "user_description": {"type": ["string", "null"]},
+          "usage": {"type": ["string", "null"]}, "step_id": {"type": ["string", "null"]},
+          "caption": {"type": ["string", "null"]}, "included": {"type": "boolean"}, "confirmed": {"type": "boolean"},
+          "source_refs": {"type": "array", "items": {"type": "string"}},
+          "transform_authorization": {
+            "type": "object", "required": ["rotate", "mirror", "crop"],
+            "properties": {"rotate": {"type": "boolean"}, "mirror": {"type": "boolean"}, "crop": {"type": "boolean"}},
+            "additionalProperties": false
+          }
+        }, "additionalProperties": true
+      }
+    },
+    "open_items": {"type": "array", "items": {"type": "object"}},
+    "template_selection": {"type": ["object", "null"]}
+  },
+  "additionalProperties": true
+}

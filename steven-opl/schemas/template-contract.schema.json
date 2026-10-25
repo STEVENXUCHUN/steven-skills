@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "template-contract.schema.json",
+  "type": "object",
+  "required": ["template_id", "template_version", "supported_schema", "template_sha256", "text_slots", "dynamic_lesson_table", "training_record_policy"],
+  "properties": {
+    "template_id": {"type": "string", "minLength": 1},
+    "template_version": {"type": "string", "minLength": 1},
+    "supported_schema": {"type": "string"},
+    "template_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_template_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "text_slots": {"type": "object"},
+    "dynamic_lesson_table": {
+      "type": "object",
+      "required": ["main_table_index", "container_row", "container_col", "min_rows", "max_rows", "max_images_per_row", "row_height_cm", "image_box_cm", "title_style", "body_style"]
+    },
+    "training_record_policy": {"const": "leave_blank"},
+    "forbidden_markers": {"type": "array", "items": {"type": "string"}},
+    "layout_invariants": {"type": "array"},
+    "visual_check_required": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}

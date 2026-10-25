@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "approved.schema.json",
+  "title": "Steven OPL approved lesson",
+  "allOf": [{"$ref": "draft.schema.json"}],
+  "type": "object",
+  "required": ["approval"],
+  "properties": {
+    "approval": {
+      "type": "object",
+      "required": ["approved", "approved_at", "approved_by", "source_ref", "draft_sha256"],
+      "properties": {
+        "approved": {"const": true},
+        "approved_at": {"type": "string"},
+        "approved_by": {"const": "user"},
+        "source_ref": {"type": "string", "minLength": 1},
+        "draft_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
